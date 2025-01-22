@@ -13,11 +13,9 @@ import com.profiles.app.profile_manager_app.repository.UserRepository;
 public class UserService {
 
     UserRepository userRepository;
-    LanguagesServices languagesServices;
 
-    public UserService(UserRepository userRepository, LanguagesServices languagesServices) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.languagesServices = languagesServices;
     }
 
     /**

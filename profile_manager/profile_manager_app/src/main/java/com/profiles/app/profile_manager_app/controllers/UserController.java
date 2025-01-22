@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.profiles.app.profile_manager_app.models.UserModel;
-import com.profiles.app.profile_manager_app.services.LanguagesServices;
 import com.profiles.app.profile_manager_app.services.UserService;
 
 import java.util.Arrays;
@@ -24,11 +23,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController {
 
     UserService userService;
-    LanguagesServices languagesServices;
 
-    public UserController(UserService userService, LanguagesServices languagesServices) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.languagesServices = languagesServices;
     }
 
     @PostMapping("/internal/create-user")

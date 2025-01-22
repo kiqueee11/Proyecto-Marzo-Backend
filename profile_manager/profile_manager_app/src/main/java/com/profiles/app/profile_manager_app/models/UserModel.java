@@ -10,10 +10,12 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.profiles.app.profile_manager_app.imported_models.UserAuthData;
 
 import jakarta.persistence.JoinColumn;
-
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -24,8 +26,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lombok.Data;
-
-
 
 @Data
 @Entity
@@ -46,29 +46,22 @@ public class UserModel {
 
     @Column(nullable = false, length = 255)
     private String password;
+    private String image1;
+    private String image2;
+    private String image3;
+    private String image4;
+    private String image5;
+    private String image6;
 
-    @ElementCollection
-    @CollectionTable(name = "user_speaked_languages", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "language")
-    @Size(max = 10, message = "A user can speak up to 10 languages")
-    private List<@NotBlank String> speakedLanguages= new ArrayList<String>();
-    
-    @ElementCollection
-    @CollectionTable(name = "user_learning_languages", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "language" )
-    @Size(max = 10, message = "A user can learn up to 10 languages")
-    private List<@NotBlank String> learningLanguages=new ArrayList<String>();
-
-    @CollectionTable(name = "user_auth_data", joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "user_auth_data", joinColumns = @JoinColumn(name = "id"))
+    @OneToOne(cascade = CascadeType.ALL)
     private UserAuthData userAuthData;
 
-
+    @Column(nullable = false)
+    private boolean isUserActive = false;
 
     @Column(nullable = false)
-    private boolean isUserActive;
-
-    @Column(nullable = false)
-    private boolean isUserBlocked;
+    private boolean isUserBlocked = false;
 
     @Version
     private Long version;

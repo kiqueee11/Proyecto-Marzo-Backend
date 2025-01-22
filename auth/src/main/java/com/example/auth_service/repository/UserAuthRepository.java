@@ -9,4 +9,8 @@ public interface UserAuthRepository extends JpaRepository<UserAuthData, Long> {
 
 
     
+
+
+
+    
 }

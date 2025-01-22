@@ -23,6 +23,9 @@ public class UserAuthData {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "user_id", unique = true, nullable = false)
+    private Long userId;
+
     @Column(length = 50, nullable = false)
     private String name;
 
@@ -42,5 +45,7 @@ public class UserAuthData {
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;  // Usar LocalDateTime
+
+    
 
 }

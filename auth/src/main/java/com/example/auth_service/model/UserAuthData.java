@@ -29,7 +29,9 @@ public class UserAuthData {
     private String name;
     @Column(length = 255, unique = true, nullable = false)
     private String password;
-    @Column(unique = false, nullable = false)
+
+    @Column(unique = true, nullable = false,name = "user_id")
+    private String userId;
 
     private String email;
 

@@ -11,7 +11,10 @@ import com.profiles.app.profile_manager_app.services.UserService;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,31 +31,38 @@ public class UserController {
         this.languagesServices = languagesServices;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/internal/create-user")
     public ResponseEntity<UserModel> createUser(
-            @RequestParam String username,
-            @RequestParam String email,
-            @RequestParam String password,
-            @RequestParam List<String> speakedLanguages,
-            @RequestParam List<String> learningLanguages,
-            @RequestParam boolean isUserActive,
-            @RequestParam boolean isUserBlocked) {
+        @RequestParam String userName, @RequestParam String password,
+        @RequestParam String email, @RequestParam String image1, @RequestParam String image2,
+        @RequestParam String image3, @RequestParam String image4, @RequestParam String image5,
+        @RequestParam String image6) {
         UserModel user = new UserModel();
-        user.setUsername(username);
+        user.setUsername(userName);
         user.setEmail(email);
         user.setPassword(password);
-        user.setSpeakedLanguages(speakedLanguages);
-        user.setLearningLanguages(learningLanguages);
-        user.setUserActive(isUserActive);
-        user.setUserBlocked(isUserBlocked);
+        user.setImage1(image1);
+        user.setImage2(image2);
+        user.setImage3(image3);
+        user.setImage4(image4);
+        user.setImage5(image5);
+        user.setImage6(image6);
         userService.createUser(user);
 
-        return ResponseEntity.ok(user) ;
+        return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/supported-languages")
-    public List<String> getSupportedLanguages() {
-        return languagesServices.getSupportedLanguages();
+    @GetMapping("/internal/get-user")
+    public ResponseEntity<Map<String, Object>> getUserByEmail(@RequestParam String email) {
+        Optional<UserModel> user = this.userService.findUserByEmail(email);
+
+        if(user.isPresent()){
+            return ResponseEntity.ok(Map.of("email", user.get().getEmail()));
+        }else{
+            return  ResponseEntity.ok(Map.of("email", "NOT_FOUND"));
+        }
+
+       
     }
 
 }

@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.stereotype.Service;
 
 import com.profiles.app.profile_manager_app.Exceptions.UserException;
-import com.profiles.app.profile_manager_app.models.UserModel;
+import com.profiles.app.profile_manager_app.models.DatosUsuario;
 import com.profiles.app.profile_manager_app.repository.UserRepository;
 
 @Service
@@ -21,7 +21,7 @@ public class UserService {
     /**
      * Create a new user
      * 
-     * @param UserModel
+     * @param DatosUsuario
      * @throws UserException
      * @throws IllegalArgumentException
      * @throws OptimisticLockingFailureException
@@ -29,11 +29,11 @@ public class UserService {
      * 
      **/
 
-    public UserModel createUser(UserModel user) {
+    public DatosUsuario createUser(DatosUsuario user) {
 
         try {
 
-            if (isStringLengthSupported(user.getUsername(), 50) == false) {
+            if (isStringLengthSupported(user.getNombre(), 50) == false) {
                 throw new UserException("USERNAME_TOO_LONG:USER_ERROR");
             }
 
@@ -41,11 +41,11 @@ public class UserService {
                 throw new UserException("EMAIL_TOO_LONG:USER_ERROR");
             }
 
-            if (user.getImage1() == null || user.getImage1().trim().isEmpty()) {
+            if (user.getImagen1() == null || user.getImagen1().trim().isEmpty()) {
                 throw new UserException("AT_LEAST_ONE_IMAGE_SHOULD_BE_ADDED:USER_ERROR");
             }
 
-            user.setUserId(generateId(15));
+            user.setIdUsuario(generateId(15));
 
             user = userRepository.save(user);
             return user;
@@ -69,7 +69,7 @@ public class UserService {
 
 
 
-    public Optional<UserModel> findUserByEmail(String email) {
+    public Optional<DatosUsuario> findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 

@@ -15,10 +15,19 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import jakarta.persistence.Version;
 
+
+
+
+
+/**
+ * Representa la información de autenticación de un usuario.
+ * Esta clase se mapea a la tabla 'autenticacion' en la base de datos.
+ *
+ */
 @Entity
-@Table(name = "user_auth_data")
+@Table(name = "autenticacion")
 @Data
-public class UserAuthData {
+public class Autenticacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,12 +37,11 @@ public class UserAuthData {
     @Column(length = 50, unique = false, nullable = false)
     private String name;
     @Column(length = 255, unique = true, nullable = false)
-    private String password;
-
-    @Column(unique = true, nullable = false,name = "user_id")
-    private String userId;
-
+    private String clave;
+    @Column(length = 255, unique = true, nullable = false)
     private String email;
+    @Column(length = 50, unique = true, nullable = false)
+    private String idUsuario;
 
     @Version
     private Long version;

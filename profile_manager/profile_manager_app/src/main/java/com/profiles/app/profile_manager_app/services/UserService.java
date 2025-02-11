@@ -1,9 +1,11 @@
 package com.profiles.app.profile_manager_app.services;
 
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
+import org.locationtech.jts.geom.*;
 
 import com.profiles.app.profile_manager_app.Exceptions.UserException;
 import com.profiles.app.profile_manager_app.models.DatosUsuario;
@@ -21,7 +23,19 @@ public class UserService {
     /**
      * Create a new user
      * 
-     * @param DatosUsuario
+     * @param idUsuario
+     * @param nombre
+     * @param email
+     * @param imagen1
+     * @param imagen2
+     * @param imagen3
+     * @param imagen4
+     * @param imagen5
+     * @param imagen6
+     * @param sexo
+     * @param descripcion
+     * @param fechaNacimiento
+     * @param posicion
      * @throws UserException
      * @throws IllegalArgumentException
      * @throws OptimisticLockingFailureException
@@ -29,25 +43,37 @@ public class UserService {
      * 
      **/
 
-    public DatosUsuario createUser(DatosUsuario user) {
+    public DatosUsuario createUser(String idUsuario, String nombre, String email, String imagen1, String imagen2,
+            String imagen3, String imagen4, String imagen5, String imagen6, String sexo, String descripcion,
+            String fechaNacimiento, String posicion) {
 
         try {
 
-            if (isStringLengthSupported(user.getNombre(), 50) == false) {
-                throw new UserException("USERNAME_TOO_LONG:USER_ERROR");
-            }
+            ZonedDateTime zdt = ZonedDateTime.parse(fechaNacimiento);
+            java.time.Instant fechaNacimientoInstant = zdt.toInstant();
+            Point posicionPoint = parsePoint(posicion);
 
-            if (isStringLengthSupported(user.getEmail(), 50) == false) {
-                throw new UserException("EMAIL_TOO_LONG:USER_ERROR");
-            }
-
-            if (user.getImagen1() == null || user.getImagen1().trim().isEmpty()) {
+            DatosUsuario user = new DatosUsuario();
+            user.setIdUsuario(idUsuario);            
+            user.setNombre(nombre);
+            user.setEmail(email);
+            user.setImagen1(imagen1);
+            user.setImagen2(imagen2);
+            user.setImagen3(imagen3);
+            user.setImagen4(imagen4);
+            user.setImagen5(imagen5);
+            user.setImagen6(imagen6);
+            user.setSexo(sexo);
+            user.setDescripcion(descripcion);
+            user.setFechaNacimiento(fechaNacimientoInstant);
+            user.setPosicion(posicionPoint);
+            
+            if (imagen1 == null || imagen1.trim().isEmpty()) {
                 throw new UserException("AT_LEAST_ONE_IMAGE_SHOULD_BE_ADDED:USER_ERROR");
             }
 
-            user.setIdUsuario(generateId(15));
-
             user = userRepository.save(user);
+            
             return user;
         } catch (RuntimeException e) {
             throw new UserException(e.getMessage());
@@ -59,27 +85,24 @@ public class UserService {
         return string.length() <= maxLength;
     }
 
-
-
     /**
      * Find a user by its email.
+     * 
      * @param email The email of the user to find.
      * @return The user with the given email, or null if no such user exists.
      */
-
-
 
     public Optional<DatosUsuario> findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-
     /**
      * Generates an unique id with letters and numbers
+     * 
      * @param length the length of the UID
-     * @return An String UID 
+     * @return An String UID
      */
-    private String generateId(int length){
+    private String generateId(int length) {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
@@ -87,6 +110,16 @@ public class UserService {
             sb.append(chars.charAt(randomIndex));
         }
         return sb.toString();
+
+    }
+
+    private Point parsePoint(String posicion) {
+        String[] coordinates = posicion.split(",");
+        double latitude = Double.parseDouble(coordinates[0]);
+        double longitude = Double.parseDouble(coordinates[1]);
+        GeometryFactory geometryFactory= new GeometryFactory();
+        Point resultado= geometryFactory.createPoint(new Coordinate(longitude, latitude));
+        return resultado;
 
     }
 

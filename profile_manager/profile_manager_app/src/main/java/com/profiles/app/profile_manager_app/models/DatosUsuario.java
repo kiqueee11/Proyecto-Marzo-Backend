@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.geo.Point;
+import org.locationtech.jts.geom.*;
 
 import com.profiles.app.profile_manager_app.imported_models.UserAuthData;
 
@@ -32,22 +32,6 @@ import lombok.Data;
 @Table(name = "usuario")
 public class DatosUsuario {
 
-    public DatosUsuario(String idUsuario, String nombre, String email, String imagen1, String imagen2, String imagen3,
-            String imagen4, String imagen5, String imagen6, String descripcion,String sexo, Instant fechaNacimiento, Point posicion) {
-        this.idUsuario = idUsuario;
-        this.nombre = nombre;
-        this.email = email;
-        this.imagen1 = imagen1;
-        this.imagen2 = imagen2;
-        this.imagen3 = imagen3;
-        this.imagen4 = imagen4;
-        this.imagen5 = imagen5;
-        this.imagen6 = imagen6;
-        this.sexo = sexo;
-        this.fechaNacimiento = fechaNacimiento;
-        this.posicion = posicion;
-        this.descripcion=descripcion;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -88,7 +72,6 @@ public class DatosUsuario {
     @Column(nullable = false)
     private String sexo;
 
-    @Column(nullable = true)
     private Point posicion;
 
     @Version

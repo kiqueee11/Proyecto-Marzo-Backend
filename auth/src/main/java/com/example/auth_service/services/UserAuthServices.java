@@ -58,10 +58,9 @@ public class UserAuthServices {
      */
 
     public Autenticacion creaAuthData(String name, String password, String email, String image1, String image2,
-            String image3, String image4, String image5, String image6,String sexo,String descripcion, Instant fechaNacimiento, Point posicion) {
+            String image3, String image4, String image5, String image6,String sexo,String descripcion, String fechaNacimiento, String posicion) {
 
                 String uidString=UIDGenerator.generateId(15);
-
                 Optional<ResponseEntity<Map<String, Object>>> userData = userServiceClient.getUserByEmail(email);
                 String emailString = userData.get().getBody().get("email").toString();
         if (email.equals(emailString)) {
@@ -82,5 +81,9 @@ public class UserAuthServices {
         }
 
     }
+
+
+
+
 
 }

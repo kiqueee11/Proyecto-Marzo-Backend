@@ -1,6 +1,7 @@
 package com.example.auth_service.controller;
 
 import java.time.Instant;
+import java.time.ZonedDateTime;
 
 import org.springframework.data.geo.Point;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -29,7 +30,8 @@ public class UserAuthDataController {
     public ResponseEntity<Object> createAuthData(@RequestParam String nombre, @RequestParam String clave,
             @RequestParam String email, @RequestParam String image1, @RequestParam String image2,
             @RequestParam String image3, @RequestParam String image4, @RequestParam String image5,
-            @RequestParam String image6, @RequestParam String sexo,@RequestParam String descripcion,@RequestParam("fechaNacimiento") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Instant fechaNacimiento,@RequestParam Point posicion) {
+            @RequestParam String image6, @RequestParam String sexo,@RequestParam String descripcion,@RequestParam String fechaNacimiento,@RequestParam String posicion) {
+
 
         Autenticacion userAuthData = userAuthServices.creaAuthData(nombre, clave, email, image1, image2, image3,
                 image4, image5, image6,sexo,descripcion,fechaNacimiento,posicion);

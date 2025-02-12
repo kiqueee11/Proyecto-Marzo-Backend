@@ -12,7 +12,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.locationtech.jts.geom.*;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.profiles.app.profile_manager_app.imported_models.UserAuthData;
+import com.profiles.app.profile_manager_app.serializadores.coordenadas.SerializadorMapaPoint;
+import com.profiles.app.profile_manager_app.serializadores.coordenadas.SerializadorPointMapa;
 
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -71,6 +75,10 @@ public class DatosUsuario {
 
     @Column(nullable = false)
     private String sexo;
+
+    @JsonSerialize(using=SerializadorPointMapa.class)
+    @JsonDeserialize(using=SerializadorMapaPoint.class)
+    @Column(nullable = false)
 
     private Point posicion;
 

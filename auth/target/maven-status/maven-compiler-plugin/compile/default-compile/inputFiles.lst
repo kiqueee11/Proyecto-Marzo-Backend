@@ -1,8 +1,10 @@
 /home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/auth/src/main/java/com/example/auth_service/AuthApplication.java
 /home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/auth/src/main/java/com/example/auth_service/ExceptionManager.java
+/home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/auth/src/main/java/com/example/auth_service/Utils/UIDGenerator.java
 /home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/auth/src/main/java/com/example/auth_service/controller/UserAuthDataController.java
 /home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/auth/src/main/java/com/example/auth_service/exceptions/UserAuthException.java
 /home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/auth/src/main/java/com/example/auth_service/interfaces/UserServiceClient.java
-/home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/auth/src/main/java/com/example/auth_service/model/UserAuthData.java
+/home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/auth/src/main/java/com/example/auth_service/model/Autenticacion.java
 /home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/auth/src/main/java/com/example/auth_service/repository/UserAuthRepository.java
 /home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/auth/src/main/java/com/example/auth_service/services/UserAuthServices.java
+/home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/auth/src/main/java/com/example/auth_service/validator/AuthValidator.java

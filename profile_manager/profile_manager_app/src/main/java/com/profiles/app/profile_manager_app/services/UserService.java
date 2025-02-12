@@ -10,6 +10,7 @@ import org.locationtech.jts.geom.*;
 import com.profiles.app.profile_manager_app.Exceptions.UserException;
 import com.profiles.app.profile_manager_app.models.DatosUsuario;
 import com.profiles.app.profile_manager_app.repository.UserRepository;
+import com.profiles.app.profile_manager_app.validators.ValidadorDatosUsuario;
 
 @Service
 public class UserService {
@@ -48,13 +49,14 @@ public class UserService {
             String fechaNacimiento, String posicion) {
 
         try {
+            ValidadorDatosUsuario.validarDatosUsuario(nombre, idUsuario, email, imagen1, imagen2, imagen3, imagen4,
+                    imagen5, imagen6, sexo, descripcion, fechaNacimiento, posicion, userRepository);
 
             ZonedDateTime zdt = ZonedDateTime.parse(fechaNacimiento);
             java.time.Instant fechaNacimientoInstant = zdt.toInstant();
             Point posicionPoint = parsePoint(posicion);
-
             DatosUsuario user = new DatosUsuario();
-            user.setIdUsuario(idUsuario);            
+            user.setIdUsuario(idUsuario);
             user.setNombre(nombre);
             user.setEmail(email);
             user.setImagen1(imagen1);
@@ -67,13 +69,8 @@ public class UserService {
             user.setDescripcion(descripcion);
             user.setFechaNacimiento(fechaNacimientoInstant);
             user.setPosicion(posicionPoint);
-            
-            if (imagen1 == null || imagen1.trim().isEmpty()) {
-                throw new UserException("AT_LEAST_ONE_IMAGE_SHOULD_BE_ADDED:USER_ERROR");
-            }
-
             user = userRepository.save(user);
-            
+
             return user;
         } catch (RuntimeException e) {
             throw new UserException(e.getMessage());
@@ -81,9 +78,6 @@ public class UserService {
 
     }
 
-    private boolean isStringLengthSupported(String string, int maxLength) {
-        return string.length() <= maxLength;
-    }
 
     /**
      * Find a user by its email.
@@ -117,8 +111,8 @@ public class UserService {
         String[] coordinates = posicion.split(",");
         double latitude = Double.parseDouble(coordinates[0]);
         double longitude = Double.parseDouble(coordinates[1]);
-        GeometryFactory geometryFactory= new GeometryFactory();
-        Point resultado= geometryFactory.createPoint(new Coordinate(longitude, latitude));
+        GeometryFactory geometryFactory = new GeometryFactory();
+        Point resultado = geometryFactory.createPoint(new Coordinate(longitude, latitude));
         return resultado;
 
     }

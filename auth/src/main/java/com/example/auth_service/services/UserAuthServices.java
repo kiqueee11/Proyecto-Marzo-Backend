@@ -67,8 +67,7 @@ public class UserAuthServices {
     public Autenticacion creaAuthData(String name, String password, String email, String image1, String image2,
             String image3, String image4, String image5, String image6, String sexo, String descripcion,
             String fechaNacimiento, String posicion) {
-
-
+        // Validamos los datos necesarios para crear el objeto autenticacion
         AuthValidator.validarDatosRegistro(name, password, email, userAuthRepository);
         String uidString = UIDGenerator.generateId(15);
          userServiceClient.createUser(uidString, name,

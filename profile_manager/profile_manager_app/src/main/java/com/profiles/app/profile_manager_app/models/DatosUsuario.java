@@ -14,7 +14,6 @@ import org.locationtech.jts.geom.*;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.profiles.app.profile_manager_app.imported_models.UserAuthData;
 import com.profiles.app.profile_manager_app.serializadores.coordenadas.SerializadorMapaPoint;
 import com.profiles.app.profile_manager_app.serializadores.coordenadas.SerializadorPointMapa;
 
@@ -59,7 +58,7 @@ public class DatosUsuario {
     private String imagen6;
 
     @Column(nullable = false)
-    private boolean istaActivo = false;
+    private boolean estaActivo = false;
 
     @Column(nullable = false)
     private boolean estaBloqueado = false;

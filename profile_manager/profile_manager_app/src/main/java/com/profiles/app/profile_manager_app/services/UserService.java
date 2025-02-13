@@ -1,15 +1,20 @@
 package com.profiles.app.profile_manager_app.services;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.locationtech.jts.geom.*;
+import org.locationtech.jts.io.WKTWriter;
 
+import com.profiles.app.profile_manager_app.DTOs.DatosUsuarioDTO;
 import com.profiles.app.profile_manager_app.Exceptions.UserException;
 import com.profiles.app.profile_manager_app.models.DatosUsuario;
 import com.profiles.app.profile_manager_app.repository.UserRepository;
+import com.profiles.app.profile_manager_app.utils.PointParser;
 import com.profiles.app.profile_manager_app.validators.ValidadorDatosUsuario;
 
 @Service
@@ -54,7 +59,7 @@ public class UserService {
 
             ZonedDateTime zdt = ZonedDateTime.parse(fechaNacimiento);
             java.time.Instant fechaNacimientoInstant = zdt.toInstant();
-            Point posicionPoint = parsePoint(posicion);
+            Point posicionPoint = PointParser.parsePoint(posicion);
             DatosUsuario user = new DatosUsuario();
             user.setIdUsuario(idUsuario);
             user.setNombre(nombre);
@@ -78,7 +83,6 @@ public class UserService {
 
     }
 
-
     /**
      * Find a user by its email.
      * 
@@ -90,31 +94,22 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    /**
-     * Generates an unique id with letters and numbers
-     * 
-     * @param length the length of the UID
-     * @return An String UID
-     */
-    private String generateId(int length) {
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            int randomIndex = (int) (Math.random() * chars.length());
-            sb.append(chars.charAt(randomIndex));
+    public ResponseEntity<?> buscarUsuarioPorPosicion(String posicion, int distancia) {
+
+        try {
+            Point posPoint = PointParser.parsePoint(posicion);
+            WKTWriter wktWriter = new WKTWriter();
+            String posString = wktWriter.write(posPoint);
+            Optional<ArrayList<DatosUsuarioDTO>> usuarios = userRepository.findByPosicion(posString, distancia);
+            if (usuarios.isPresent()) {
+                return ResponseEntity.ok(usuarios.get());
+            }
+            return ResponseEntity.notFound().build();
+
+        } catch (Exception e) {
+
+            throw new UserException(e.getMessage());
         }
-        return sb.toString();
-
-    }
-
-    private Point parsePoint(String posicion) {
-        String[] coordinates = posicion.split(",");
-        double latitude = Double.parseDouble(coordinates[0]);
-        double longitude = Double.parseDouble(coordinates[1]);
-        GeometryFactory geometryFactory = new GeometryFactory();
-        Point resultado = geometryFactory.createPoint(new Coordinate(longitude, latitude));
-        return resultado;
-
     }
 
 }

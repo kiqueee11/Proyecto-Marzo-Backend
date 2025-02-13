@@ -22,8 +22,9 @@ public class SerializadorMapaPoint extends JsonDeserializer<Point> {
         Map<String, Double> map = jsonParser.readValueAs(Map.class);
         if (map.containsKey("latitud") && map.containsKey("longitud")) {
             GeometryFactory geometryFactory = new GeometryFactory();
-            return geometryFactory.createPoint(new Coordinate(map.get("longitud"), map.get("latitud")));
-
+            Point point = geometryFactory.createPoint(new Coordinate(map.get("longitud"), map.get("latitud")));
+            point.setSRID(4326);
+            return point;
         }
 
         return null;

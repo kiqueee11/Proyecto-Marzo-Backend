@@ -17,6 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/users")
@@ -71,6 +72,12 @@ public class UserController {
             return ResponseEntity.ok(Map.of("email", "NOT_FOUND"));
         }
 
+    }
+
+    @PostMapping("/buscarusuarioporposicion")
+    public ResponseEntity<?> buscarUsuarioPorPosicion(@RequestParam String posicion, @RequestParam int distancia) {
+
+        return userService.buscarUsuarioPorPosicion(posicion, distancia);
     }
 
 }

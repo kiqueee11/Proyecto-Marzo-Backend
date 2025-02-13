@@ -9,11 +9,16 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.data.geo.Point;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.auth_service.Utils.UIDGenerator;
+import com.example.auth_service.componentes.JWT.CreadorTokenJWT;
+import com.example.auth_service.componentes.JWT.ValidadorJWT;
 import com.example.auth_service.exceptions.UserAuthException;
 import com.example.auth_service.interfaces.UserServiceClient;
 import com.example.auth_service.model.Autenticacion;
@@ -29,11 +34,20 @@ public class UserAuthServices {
     private UserAuthRepository userAuthRepository;
     private UserServiceClient userServiceClient;
 
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private CreadorTokenJWT creadorTokenJWT;
+
+    @Autowired
+    private ValidadorJWT validadorJWT;
+
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public UserAuthServices(UserAuthRepository userAuthRepository, UserServiceClient userServiceClient) {
+    public UserAuthServices(UserAuthRepository userAuthRepository, UserServiceClient userServiceClient, AuthenticationManager authenticationManager) {
         this.userAuthRepository = userAuthRepository;
         this.userServiceClient = userServiceClient;
+        this.authenticationManager = authenticationManager;
     }
 
     /**
@@ -70,7 +84,7 @@ public class UserAuthServices {
         // Validamos los datos necesarios para crear el objeto autenticacion
         AuthValidator.validarDatosRegistro(name, password, email, userAuthRepository);
         String uidString = UIDGenerator.generateId(15);
-         userServiceClient.createUser(uidString, name,
+        userServiceClient.createUser(uidString, name,
                 password, email, image1, image2,
                 image3, image4, image5, image6, sexo, descripcion, fechaNacimiento, posicion);
         String encodedPassword = passwordEncoder.encode(password);
@@ -84,6 +98,15 @@ public class UserAuthServices {
 
     }
 
- 
+
+
+    public ResponseEntity<?> iniciarSesion(String email, String password) {
+
+        Authentication autenticacion = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(email, password));
+        String token = creadorTokenJWT.generarToken(autenticacion);
+        return ResponseEntity.ok(Map.of("token", token));
+
+    }
 
 }

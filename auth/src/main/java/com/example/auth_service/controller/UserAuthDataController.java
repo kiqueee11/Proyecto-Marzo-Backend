@@ -15,6 +15,8 @@ import com.example.auth_service.services.UserAuthServices;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/auth")
@@ -30,14 +32,19 @@ public class UserAuthDataController {
     public ResponseEntity<Object> createAuthData(@RequestParam String nombre, @RequestParam String clave,
             @RequestParam String email, @RequestParam String image1, @RequestParam String image2,
             @RequestParam String image3, @RequestParam String image4, @RequestParam String image5,
-            @RequestParam String image6, @RequestParam String sexo,@RequestParam String descripcion,@RequestParam String fechaNacimiento,@RequestParam String posicion) {
-
+            @RequestParam String image6, @RequestParam String sexo, @RequestParam String descripcion,
+            @RequestParam String fechaNacimiento, @RequestParam String posicion) {
 
         Autenticacion userAuthData = userAuthServices.creaAuthData(nombre, clave, email, image1, image2, image3,
-                image4, image5, image6,sexo,descripcion,fechaNacimiento,posicion);
-
+                image4, image5, image6, sexo, descripcion, fechaNacimiento, posicion);
 
         return ResponseEntity.ok().body(userAuthData);
+    }
+
+    @PostMapping("/iniciarSesion")
+    public ResponseEntity<?> iniciarSesion(@RequestParam String email, @RequestParam String clave) {
+
+        return ResponseEntity.ok().body(userAuthServices.iniciarSesion(email, clave));
     }
 
 }

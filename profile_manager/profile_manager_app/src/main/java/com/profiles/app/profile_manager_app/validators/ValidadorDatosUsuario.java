@@ -66,7 +66,7 @@ public class ValidadorDatosUsuario {
             throw new UserException("ERROR: LA DESCRIPCION DEBE TENER ENTRE 1 Y 250 CARACTERES");
         }
         if (fechaNacimiento == null || fechaNacimiento.trim().isEmpty()
-                || !DateValidator.getInstance().isValid(fechaNacimiento)) {
+                || !ValidadorFechaFromatoISO8601.esValida(fechaNacimiento)) {
             throw new UserException("ERROR: LA FECHA DE NACIMIENTO NO PUEDE ESTAR VACIA");
         }
 

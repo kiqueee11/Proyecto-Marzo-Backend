@@ -1,8 +1,11 @@
-/home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/profile_manager/profile_manager_app/src/main/java/com/profiles/app/profile_manager_app/ExceptionHandlers/UserExceptionHandler.java
-/home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/profile_manager/profile_manager_app/src/main/java/com/profiles/app/profile_manager_app/Exceptions/UserException.java
-/home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/profile_manager/profile_manager_app/src/main/java/com/profiles/app/profile_manager_app/ProfileManagerAppApplication.java
-/home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/profile_manager/profile_manager_app/src/main/java/com/profiles/app/profile_manager_app/controllers/UserController.java
-/home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/profile_manager/profile_manager_app/src/main/java/com/profiles/app/profile_manager_app/imported_models/UserAuthData.java
-/home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/profile_manager/profile_manager_app/src/main/java/com/profiles/app/profile_manager_app/models/DatosUsuario.java
-/home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/profile_manager/profile_manager_app/src/main/java/com/profiles/app/profile_manager_app/repository/UserRepository.java
-/home/marcos/ProyectosClase/proyecto_marzo2/Proyecto-Marzo-Backend/profile_manager/profile_manager_app/src/main/java/com/profiles/app/profile_manager_app/services/UserService.java
+C:\Users\ALUMNO\Documents\2025\PROYECTO MARZO\Proyecto-Marzo-Backend\profile_manager\profile_manager_app\src\main\java\com\profiles\app\profile_manager_app\controllers\UserController.java
+C:\Users\ALUMNO\Documents\2025\PROYECTO MARZO\Proyecto-Marzo-Backend\profile_manager\profile_manager_app\src\main\java\com\profiles\app\profile_manager_app\ExceptionHandlers\UserExceptionHandler.java
+C:\Users\ALUMNO\Documents\2025\PROYECTO MARZO\Proyecto-Marzo-Backend\profile_manager\profile_manager_app\src\main\java\com\profiles\app\profile_manager_app\Exceptions\UserException.java
+C:\Users\ALUMNO\Documents\2025\PROYECTO MARZO\Proyecto-Marzo-Backend\profile_manager\profile_manager_app\src\main\java\com\profiles\app\profile_manager_app\models\DatosUsuario.java
+C:\Users\ALUMNO\Documents\2025\PROYECTO MARZO\Proyecto-Marzo-Backend\profile_manager\profile_manager_app\src\main\java\com\profiles\app\profile_manager_app\ProfileManagerAppApplication.java
+C:\Users\ALUMNO\Documents\2025\PROYECTO MARZO\Proyecto-Marzo-Backend\profile_manager\profile_manager_app\src\main\java\com\profiles\app\profile_manager_app\repository\UserRepository.java
+C:\Users\ALUMNO\Documents\2025\PROYECTO MARZO\Proyecto-Marzo-Backend\profile_manager\profile_manager_app\src\main\java\com\profiles\app\profile_manager_app\serializadores\coordenadas\SerializadorMapaPoint.java
+C:\Users\ALUMNO\Documents\2025\PROYECTO MARZO\Proyecto-Marzo-Backend\profile_manager\profile_manager_app\src\main\java\com\profiles\app\profile_manager_app\serializadores\coordenadas\SerializadorPointMapa.java
+C:\Users\ALUMNO\Documents\2025\PROYECTO MARZO\Proyecto-Marzo-Backend\profile_manager\profile_manager_app\src\main\java\com\profiles\app\profile_manager_app\services\UserService.java
+C:\Users\ALUMNO\Documents\2025\PROYECTO MARZO\Proyecto-Marzo-Backend\profile_manager\profile_manager_app\src\main\java\com\profiles\app\profile_manager_app\validators\ValidadorDatosUsuario.java
+C:\Users\ALUMNO\Documents\2025\PROYECTO MARZO\Proyecto-Marzo-Backend\profile_manager\profile_manager_app\src\main\java\com\profiles\app\profile_manager_app\validators\ValidadorFechaFromatoISO8601.java

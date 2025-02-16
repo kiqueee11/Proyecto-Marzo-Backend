@@ -5,28 +5,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.flashmeet.videocall.model.VideoCallModel;
 import com.flashmeet.videocall.service.VideoCallService;
-
-import org.apache.catalina.connector.Response;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/videocall")
-public class VideoCallController {
-    
+@RequestMapping("/VideoCall")
+public class SettingsController {
+
     private VideoCallService videoCallService;
-    
-    public VideoCallController(VideoCallService videoCallService) {
+
+    public SettingsController(VideoCallService videoCallService) {
         this.videoCallService = videoCallService;
     }
 
-    @PostMapping("save")
-    public String postMethodName(@RequestBody VideoCallModel videoCallModel) {
+    @PostMapping("/save")
+    public ResponseEntity<VideoCallModel> saveVideoCall(@RequestBody VideoCallModel videoCallModel) {
         
         videoCallService.saveVideoCall(videoCallModel);
-        return Response.ok(videoCallModel);
+        return ResponseEntity.ok(videoCallModel);
     }
-    
 
 }

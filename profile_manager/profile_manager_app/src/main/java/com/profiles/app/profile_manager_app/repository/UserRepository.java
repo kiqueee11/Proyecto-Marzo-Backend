@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<DatosUsuario, Long> {
     Optional<DatosUsuario> findByEmail(String email);
 
     @Query(value = "SELECT  new com.profiles.app.profile_manager_app.DTOs.DatosUsuarioDTO(usuario.idUsuario, usuario.sexo, usuario.fechaNacimiento, usuario.descripcion) FROM DatosUsuario usuario WHERE ST_Distance_Sphere(posicion, ST_GeomFromText(:posString, 4326)) <= :distancia")
-Optional<ArrayList<DatosUsuarioDTO>> findByPosicion(@Param("posString") String posString, 
-                                                 @Param("distancia") int distancia);
+    Optional<ArrayList<DatosUsuarioDTO>> findByPosicion(@Param("posString") String posString,
+            @Param("distancia") int distancia);
 
 }

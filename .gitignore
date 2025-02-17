@@ -1,0 +1,25 @@
+*.class
+*.jar
+*.war
+*.ear
+
+application-*.properties
+application-*.yml
+
+# Archivos de registro (para todas las apps)
+*.log
+logs/
+
+# Archivos temporales (para todas las apps)
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
+
+
+# Archivos de configuración de VS Code
+.vscode/
+
+# Datos sensibles (para todas las apps)
+*.pem
+*.key

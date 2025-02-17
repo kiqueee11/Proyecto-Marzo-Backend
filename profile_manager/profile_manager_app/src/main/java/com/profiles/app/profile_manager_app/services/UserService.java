@@ -112,4 +112,9 @@ public class UserService {
         }
     }
 
+    public Optional<DatosUsuario> getUserById(String id) {
+        return userRepository.findById(Long.parseLong(id));
+    }
+
+
 }

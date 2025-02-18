@@ -1,0 +1,87 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "ChatApplication",
+            "request": "launch",
+            "mainClass": "com.flashmeet.chat.chat.ChatApplication"
+        },
+        {
+            "type": "java",
+            "name": "GatewayApplication",
+            "request": "launch",
+            "mainClass": "com.flashmeet.gateway.gateway.GatewayApplication"
+        },
+        {
+            "type": "java",
+            "name": "ServidorDescubrimientoApplication",
+            "request": "launch",
+            "mainClass": "com.flash_meet_server.eureka.servidor_descubrimiento.ServidorDescubrimientoApplication"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-AuthApplication<auth>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.auth_service.AuthApplication",
+            "projectName": "auth",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=44539 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=auth"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ProfileManagerAppApplication<profile_manager_app>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.profiles.app.profile_manager_app.ProfileManagerAppApplication",
+            "projectName": "profile_manager_app",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=43389 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=profile_manager_app"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ServidorDescubrimientoApplication<servidor_descubrimiento>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.flash_meet_server.eureka.servidor_descubrimiento.ServidorDescubrimientoApplication",
+            "projectName": "servidor_descubrimiento",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=37267 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=servidor_descubrimiento"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-GatewayApplication<gateway>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.flashmeet.gateway.gateway.GatewayApplication",
+            "projectName": "gateway",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=35329 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=gateway"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ChatApplication<chat>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.flashmeet.chat.chat.ChatApplication",
+            "projectName": "chat",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-MessagesApplication<messages>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.flashmeet.messages.MessagesApplication",
+            "projectName": "messages",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

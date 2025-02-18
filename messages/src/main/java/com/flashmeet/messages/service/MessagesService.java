@@ -12,13 +12,9 @@ import com.netflix.discovery.DiscoveryClient;
 @Service
 public class MessagesService {
 
-
     private KafkaTemplate<String, String> kafkaTemplate;
 
     private final String KAFKA_TOPIC = "messages";
-
-
-
 
     private MessagesRepository messagesRepository;
 
@@ -27,20 +23,17 @@ public class MessagesService {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-
     @SuppressWarnings("unchecked")
     public List<MessageModel> getAllMessages() {
         return (List<MessageModel>) messagesRepository.findAll();
     }
 
-    public ResponseEntity<MessageModel>saveMessage(MessageModel message){
+    public ResponseEntity<MessageModel> saveMessage(MessageModel message) {
+
         kafkaTemplate.send(KAFKA_TOPIC, message.getMessageContent());
-        return ResponseEntity.ok(messagesRepository.save(message));
+        messagesRepository.save(message);
+        return ResponseEntity.ok().build();
     }
 
-  /*  public String getConsumerUrlString() {
-        return discoveryClient.getInstancesById("realtime").getFirst()
-                .getHostName().toString();
-    }*/
-    
+
 }

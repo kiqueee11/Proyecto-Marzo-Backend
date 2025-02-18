@@ -10,26 +10,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping("/messages")
 public class MessagesController {
 
-
-
     private MessagesService messagesService;
+
     public MessagesController(MessagesService messagesService) {
         this.messagesService = messagesService;
     }
 
-
-
-
     @PostMapping("/send")
     public ResponseEntity<MessageModel> send(@RequestBody MessageModel entity) {
-        
+
         return messagesService.saveMessage(entity);
     }
-    
-    
+
 }

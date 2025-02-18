@@ -25,60 +25,41 @@ services:
     depends_on:
       - db
 
-  zoo1:
-    image: ubuntu/zookeeper
-    restart: always
-    hostname: zoo1
-    ports:
-      - 2181:2181
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
     environment:
-      ZOO_MY_ID: 1
-      ZOO_SERVERS: server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181
-
-  zoo2:
-    image: ubuntu/zookeeper
-    restart: always
-    hostname: zoo2
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
     ports:
-      - 2182:2181
-    environment:
-      ZOO_MY_ID: 2
-      ZOO_SERVERS: server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181
-
-  zoo3:
-    image: ubuntu/zookeeper
-    restart: always
-    hostname: zoo3
-    ports:
-      - 2183:2181
-    environment:
-      ZOO_MY_ID: 3
-      ZOO_SERVERS: server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181
-
+      - 22181:2181
+  
   kafka:
-    image: wurstmeister/kafka:latest
-    restart: always
-    hostname: kafka
-    ports:
-      - 9093:9093  # Exponemos el puerto 9093 para acceder a Kafka
-    environment:
-      KAFKA_ADVERTISED_HOST_NAME: localhost:9093 
-      KAFKA_ADVERTISED_LISTENER: localhost:9093  # Nombre de host accesible desde otros servicios
-      KAFKA_LISTENER_SECURITY_PROTOCOL: PLAINTEXT
-      KAFKA_LISTENER_NAME_INTERNAL: INSIDE-KAFKA
-      KAFKA_LISTENER_INTERNAL_PORT: 9093
-      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2182,zoo3:2183  # Conexión a Zookeeper
-      KAFKA_LISTENER_PORT: 9093
-      KAFKA_LISTENER_INTERNAL_HOSTNAME: kafka  # Nombre del servicio Kafka
-      KAFKA_LISTENER_NAME_EXTERNAL: EXTERNAL-KAFKA
-      KAFKA_LISTENER_EXTERNAL_PORT: 9093
-      KAFKA_LISTENER_NAME_INTERNAL_HOSTNAME: INSIDE-KAFKA
-      KAFKA_LISTENER_NAME_EXTERNAL_HOSTNAME: INSIDE-KAFKA
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    image: confluentinc/cp-kafka:latest
     depends_on:
-      - zoo1
-      - zoo2
-      - zoo3
+      - zookeeper
+    ports:
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CFG_MESSAGE_MAX_BYTES: 10485760
+      KAFKA_CFG_MAX_REQUEST_SIZE: 10485760
+      KAFKA_CFG_REPLICA_FETCH_MAX_BYTES: 10485760
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    depends_on:
+      - kafka
+    ports:
+      - 8090:8080
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
 
 volumes:
   db_data:

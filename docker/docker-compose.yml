@@ -25,5 +25,60 @@ services:
     depends_on:
       - db
 
+  zoo1:
+    image: ubuntu/zookeeper
+    restart: always
+    hostname: zoo1
+    ports:
+      - 2181:2181
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181
+
+  zoo2:
+    image: ubuntu/zookeeper
+    restart: always
+    hostname: zoo2
+    ports:
+      - 2182:2181
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181
+
+  zoo3:
+    image: ubuntu/zookeeper
+    restart: always
+    hostname: zoo3
+    ports:
+      - 2183:2181
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    restart: always
+    hostname: kafka
+    ports:
+      - 9093:9093  # Exponemos el puerto 9093 para acceder a Kafka
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost:9093 
+      KAFKA_ADVERTISED_LISTENER: localhost:9093  # Nombre de host accesible desde otros servicios
+      KAFKA_LISTENER_SECURITY_PROTOCOL: PLAINTEXT
+      KAFKA_LISTENER_NAME_INTERNAL: INSIDE-KAFKA
+      KAFKA_LISTENER_INTERNAL_PORT: 9093
+      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2182,zoo3:2183  # Conexión a Zookeeper
+      KAFKA_LISTENER_PORT: 9093
+      KAFKA_LISTENER_INTERNAL_HOSTNAME: kafka  # Nombre del servicio Kafka
+      KAFKA_LISTENER_NAME_EXTERNAL: EXTERNAL-KAFKA
+      KAFKA_LISTENER_EXTERNAL_PORT: 9093
+      KAFKA_LISTENER_NAME_INTERNAL_HOSTNAME: INSIDE-KAFKA
+      KAFKA_LISTENER_NAME_EXTERNAL_HOSTNAME: INSIDE-KAFKA
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+
 volumes:
   db_data:

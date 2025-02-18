@@ -82,6 +82,16 @@
             "projectName": "messages",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-RealtimeApplication<realtime>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.flashmeet.realtime.RealtimeApplication",
+            "projectName": "realtime",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

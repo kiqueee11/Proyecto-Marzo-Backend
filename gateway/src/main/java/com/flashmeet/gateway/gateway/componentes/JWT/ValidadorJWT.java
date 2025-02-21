@@ -1,4 +1,4 @@
-package com.example.auth_service.componentes.JWT;
+package com.flashmeet.gateway.gateway.componentes.JWT;
 
 import java.util.Base64;
 
@@ -15,13 +15,15 @@ public class ValidadorJWT {
     private String CLAVE_SECRETA;
 
     public boolean validarToken(String token) {
-        byte[] claveDecodificada = Base64.getDecoder().decode(CLAVE_SECRETA);
+        byte[] claveDecodificada=Base64.getDecoder().decode(CLAVE_SECRETA);
         try {
             Jwts.parser().verifyWith(Keys.hmacShaKeyFor((claveDecodificada))).build().parseSignedClaims(token);
             return true;
 
         } catch (Exception e) {
 
+
+            System.out.println("Error al validar el token: "+e.getMessage());
             return false;
         }
     }

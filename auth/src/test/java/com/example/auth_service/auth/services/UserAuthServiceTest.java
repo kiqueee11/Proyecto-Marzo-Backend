@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.example.auth_service.DTOs.AuthDTO;
 import com.example.auth_service.Utils.UIDGenerator;
 import com.example.auth_service.componentes.JWT.CreadorTokenJWT;
 import com.example.auth_service.componentes.JWT.ValidadorJWT;
@@ -119,7 +120,7 @@ public class UserAuthServiceTest {
 
         // Simulamos que el método createUser del cliente de servicio funciona
         // correctamente
-        when(userServiceClient.createUser("uidString", name, password, email, image1, image2, image3, image4, image5,
+        when(userServiceClient.createUser("uidString", name, email, image1, image2, image3, image4, image5,
                 image6, sexo, descripcion, fechaNacimiento, posicion))
                 .thenReturn(null); // No importa lo que devuelva, solo estamos probando que no falle.
         when(passwordEncoder.encode(password)).thenReturn("encodedPassword");
@@ -135,7 +136,7 @@ public class UserAuthServiceTest {
         when(userAuthRepository.save(any(Autenticacion.class))).thenReturn(newUser); // Verificamos que el servicio crea
                                                                                      // el usuario sin lanzar
                                                                                      // excepciones
-        Autenticacion createdUser = userAuthServices.creaAuthData(name, password, email, image1, image2, image3, image4,
+        AuthDTO createdUser = userAuthServices.creaAuthData(name, password, email, image1, image2, image3, image4,
                 image5, image6, sexo,
                 descripcion, fechaNacimiento, posicion);
 

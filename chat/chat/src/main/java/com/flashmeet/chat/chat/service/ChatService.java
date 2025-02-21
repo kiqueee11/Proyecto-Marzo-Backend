@@ -61,6 +61,7 @@ public class ChatService {
          chat.setUser1_online(true);
          chat.setUser2_online(true);
          chat.setChatAnnonimous(true);
+         
          return chatRepository.save(chat);
 
        }

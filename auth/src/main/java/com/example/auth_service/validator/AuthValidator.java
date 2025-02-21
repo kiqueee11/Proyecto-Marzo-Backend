@@ -1,7 +1,9 @@
 package com.example.auth_service.validator;
 
 import org.apache.commons.validator.routines.*;
+import org.springframework.http.HttpStatus;
 
+import com.example.auth_service.exceptions.ErrorCod;
 import com.example.auth_service.exceptions.UserAuthException;
 import com.example.auth_service.repository.UserAuthRepository;
 
@@ -26,30 +28,23 @@ public class AuthValidator {
 
     public static void validarDatosRegistro(String name, String password, String email,
             UserAuthRepository userAuthRepository) throws UserAuthException {
-        try {
-            if (name == null || name.trim().isEmpty()) {
-                throw new UserAuthException("ERROR_AUTENTICACION: El nombre no puede estar vacío");
-            }
-            if (password == null || password.length() < 6) {
-                throw new UserAuthException("ERROR_AUTENTICACION: La contraseña debe tener al menos 6 caracteres");
-            }
-            if (email == null || !EmailValidator.getInstance().isValid(email) || email.trim().isEmpty()) {
-                throw new UserAuthException("ERROR_AUTENTICACION: El formato del correo electrónico es incorrecto");
-            }
+        if (name == null || name.trim().isEmpty()) {
+            throw new UserAuthException(ErrorCod.EMPTY_NAME_ERROR,
+                    "El nombre no puede estar vacío", HttpStatus.BAD_REQUEST);
+        }
+        if (password == null || password.length() < 6) {
+            throw new UserAuthException(ErrorCod.INVALID_PASSWORD_ERROR,
+                    "La contraseña debe tener al menos 6 caracteres", HttpStatus.BAD_REQUEST);
+        }
+        if (email == null || !EmailValidator.getInstance().isValid(email) || email.trim().isEmpty()) {
+            throw new UserAuthException(ErrorCod.INVALID_EMAIL_ERROR,
+                    "El email debe tener un formato válido y no puede estar vacío", HttpStatus.BAD_REQUEST);
+        }
 
-            if (userAuthRepository.findByEmail(email).isPresent()) {
-                throw new UserAuthException("ERROR_AUTENTICACION: EL USUARIO CON ESTE EMAIL YA EXISTE");
+        if (userAuthRepository.findByEmail(email).isPresent()) {
+            throw new UserAuthException(ErrorCod.USER_ALREADY_EXISTS_ERROR,
+                    "Ya existe un usuario con el email dado", HttpStatus.CONFLICT);
 
-            }
-
-        } catch (Exception e) {
-
-            if (e.getClass() == UserAuthException.class) {
-                throw (UserAuthException) e;
-            } else {
-                throw new UserAuthException("NO SE PUDO VALIDAR LOS DATOS DE REGISTRO");
-
-            }
         }
 
     }

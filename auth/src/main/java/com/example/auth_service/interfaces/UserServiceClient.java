@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "userService")
+@FeignClient(name = "userservice")
 public interface UserServiceClient {
 
     @GetMapping(value = "/users/internal/get-user")
@@ -21,7 +21,7 @@ public interface UserServiceClient {
 
     @PostMapping(value = "/users/internal/create-user")
     Optional<ResponseEntity<Map<String, Object>>> createUser(@RequestParam String uidString,
-            @RequestParam String userName, @RequestParam String password,
+            @RequestParam String userName,
             @RequestParam String email, @RequestParam String image1, @RequestParam String image2,
             @RequestParam String image3, @RequestParam String image4, @RequestParam String image5,
             @RequestParam String image6, @RequestParam String sexo,@RequestParam String descripcion,@RequestParam String fechaNacimiento,@RequestParam String posicion);

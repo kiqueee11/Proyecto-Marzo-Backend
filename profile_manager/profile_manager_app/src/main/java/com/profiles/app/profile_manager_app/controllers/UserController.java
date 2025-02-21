@@ -50,7 +50,6 @@ public class UserController {
             @RequestParam String userName,
             @RequestParam String email, @RequestParam String image1, @RequestParam String image2,
             @RequestParam String image3, @RequestParam String image4, @RequestParam String image5,
-
             @RequestParam String image6, @RequestParam String sexo, @RequestParam String descripcion,
             @RequestParam String fechaNacimiento,
             @RequestParam String posicion) {

@@ -16,10 +16,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.auth_service.CustomUserDetails;
+import com.example.auth_service.DTOs.AuthDTO;
+import com.example.auth_service.DTOs.LoginDto;
 import com.example.auth_service.Utils.UIDGenerator;
 import com.example.auth_service.componentes.JWT.CreadorTokenJWT;
 import com.example.auth_service.componentes.JWT.ValidadorJWT;
 import com.example.auth_service.exceptions.UserAuthException;
+import com.example.auth_service.interfaces.SettingsServiceClient;
 import com.example.auth_service.interfaces.UserServiceClient;
 import com.example.auth_service.model.Autenticacion;
 import com.example.auth_service.repository.UserAuthRepository;
@@ -34,6 +38,8 @@ public class UserAuthServices {
     private UserAuthRepository userAuthRepository;
     private UserServiceClient userServiceClient;
 
+    private SettingsServiceClient settingsServiceClient;
+
     private AuthenticationManager authenticationManager;
 
     @Autowired
@@ -44,10 +50,12 @@ public class UserAuthServices {
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public UserAuthServices(UserAuthRepository userAuthRepository, UserServiceClient userServiceClient, AuthenticationManager authenticationManager) {
+    public UserAuthServices(UserAuthRepository userAuthRepository, UserServiceClient userServiceClient,
+            AuthenticationManager authenticationManager, SettingsServiceClient settingsServiceClient) {
         this.userAuthRepository = userAuthRepository;
         this.userServiceClient = userServiceClient;
         this.authenticationManager = authenticationManager;
+        this.settingsServiceClient = settingsServiceClient;
     }
 
     /**
@@ -78,34 +86,47 @@ public class UserAuthServices {
      *                           dado.
      */
 
-    public Autenticacion creaAuthData(String name, String password, String email, String image1, String image2,
+    public AuthDTO creaAuthData(String name, String password, String email, String image1, String image2,
             String image3, String image4, String image5, String image6, String sexo, String descripcion,
             String fechaNacimiento, String posicion) {
         // Validamos los datos necesarios para crear el objeto autenticacion
         AuthValidator.validarDatosRegistro(name, password, email, userAuthRepository);
         String uidString = UIDGenerator.generateId(15);
         userServiceClient.createUser(uidString, name,
-                password, email, image1, image2,
+                email, image1, image2,
                 image3, image4, image5, image6, sexo, descripcion, fechaNacimiento, posicion);
+        settingsServiceClient.createSettingsData(uidString, 18, 30, 50, sexo);
+
         String encodedPassword = passwordEncoder.encode(password);
         Autenticacion userAuthData = new Autenticacion();
         userAuthData.setEmail(email);
         userAuthData.setName(name);
         userAuthData.setIdUsuario(uidString);
-
         userAuthData.setClave(encodedPassword);
-        return userAuthRepository.save(userAuthData);
+
+        userAuthRepository.save(userAuthData);
+
+        return new AuthDTO(userAuthData.getName(), userAuthData.getIdUsuario(), null);
 
     }
 
+    /**
+     * Inicia sesión a un usuario dado su correo electrónico y contraseña.
+     *
+     * @param email    El correo electrónico del usuario.
+     * @param password La contraseña del usuario.
+     * @return Un token JWT si la autenticación es exitosa, null en caso contrario.
+     */
 
-
-    public ResponseEntity<?> iniciarSesion(String email, String password) {
+    public LoginDto iniciarSesion(String email, String password) {
 
         Authentication autenticacion = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(email, password));
-        String token = creadorTokenJWT.generarToken(autenticacion);
-        return ResponseEntity.ok(Map.of("token", token));
+
+        CustomUserDetails userDetails = (CustomUserDetails) autenticacion.getPrincipal();
+        String token = creadorTokenJWT.generarToken(autenticacion, autenticacion.getAuthorities().stream()
+                .findFirst().get().getAuthority());
+        return new LoginDto(userDetails.getUsername(), token);
 
     }
 

@@ -1,5 +1,6 @@
 package com.flashmeet.chat.chat.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,6 +10,8 @@ import com.flashmeet.chat.chat.service.*;
 import com.flashmeet.chat.chat.repository.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.flashmeet.chat.chat.model.ChatModel;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @RestController
@@ -32,5 +35,9 @@ public class ChatController {
            throw new RuntimeException(e.getMessage());
         }
     }
+
+
+
+    
 
 }

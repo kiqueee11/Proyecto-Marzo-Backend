@@ -1,39 +1,26 @@
 package com.flashmeet.messages.service;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.core.KafkaTemplate;
+
 import org.springframework.stereotype.Service;
 
-import com.flashmeet.messages.model.MessageModel;
-import com.flashmeet.messages.repository.MessagesRepository;
-import com.github.andrewoma.dexx.collection.List;
-import com.netflix.discovery.DiscoveryClient;
+import com.flashmeet.messages.Usecases.GetAllMessagesUseCase;
+import com.flashmeet.messages.Usecases.SendMessageUseCase;
+
+import lombok.Getter;
 
 @Service
+@Getter
 public class MessagesService {
 
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private SendMessageUseCase sendMessageUseCase;
 
-    private final String KAFKA_TOPIC = "messages";
+    private GetAllMessagesUseCase getAllMessagesUseCase;
 
-    private MessagesRepository messagesRepository;
+    public MessagesService(
+            SendMessageUseCase sendMessageUseCase, GetAllMessagesUseCase getAllMessagesUseCase) {
 
-    public MessagesService(MessagesRepository messagesRepository, KafkaTemplate<String, String> kafkaTemplate) {
-        this.messagesRepository = messagesRepository;
-        this.kafkaTemplate = kafkaTemplate;
+        this.sendMessageUseCase = sendMessageUseCase;
+        this.getAllMessagesUseCase = getAllMessagesUseCase;
     }
-
-    @SuppressWarnings("unchecked")
-    public List<MessageModel> getAllMessages() {
-        return (List<MessageModel>) messagesRepository.findAll();
-    }
-
-    public ResponseEntity<MessageModel> saveMessage(MessageModel message) {
-
-        kafkaTemplate.send(KAFKA_TOPIC, message.getMessageContent());
-        messagesRepository.save(message);
-        return ResponseEntity.ok().build();
-    }
-
 
 }

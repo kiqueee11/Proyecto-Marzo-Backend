@@ -36,6 +36,10 @@ public class MessageModel {
     
     private boolean isMessageRead;
 
+    @Column(nullable = false)
+
+    private String messageUID;
+
 
     @Version
     private Long version;

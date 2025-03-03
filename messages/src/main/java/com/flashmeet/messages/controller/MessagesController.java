@@ -46,8 +46,8 @@ public class MessagesController {
         return ResponseEntity.ok(messageServiceResponse);
     }
 
-    @PostMapping("/getAllMessages")
-    public ResponseEntity<MessageServiceResponse<List<MessageDTO>>> getAllMessages(String chatId) {
+    @PostMapping("/get-all-messages")
+    public ResponseEntity<MessageServiceResponse<List<MessageDTO>>> getAllMessages(@RequestParam String chatId) {
 
         List<MessageDTO> messages = messagesService.getGetAllMessagesUseCase().execute(chatId);
 

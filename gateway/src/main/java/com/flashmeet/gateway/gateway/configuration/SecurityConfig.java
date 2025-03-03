@@ -26,7 +26,6 @@ import com.flashmeet.gateway.gateway.componentes.JWT.ValidadorJWT;
 @EnableMethodSecurity
 @EnableWebFluxSecurity
 
-
 public class SecurityConfig {
 
     @Bean
@@ -46,14 +45,13 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity
-     serverHttpSecurity) throws Exception {
+    public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity serverHttpSecurity) throws Exception {
 
-        serverHttpSecurity.csrf(csrf->csrf.disable()).logout(logout->logout.disable())
+        serverHttpSecurity.csrf(csrf -> csrf.disable()).logout(logout -> logout.disable())
                 .authorizeExchange(
-                        req -> req.pathMatchers(HttpMethod.POST, "/auth/auth/iniciarSesion", "/auth/auth/register")
+                        req -> req.pathMatchers(HttpMethod.POST, "/auth/auth/iniciarSesion", "/auth/auth/signup")
                                 .permitAll().anyExchange().authenticated())
-                .addFilterAt(jwtFilter(),SecurityWebFiltersOrder.AUTHENTICATION);
+                .addFilterAt(jwtFilter(), SecurityWebFiltersOrder.AUTHENTICATION);
         return serverHttpSecurity.build();
 
     }

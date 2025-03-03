@@ -34,7 +34,7 @@ public class SignUpUseCase {
         userServiceClient.createUser(uidString, name,
                 email, image1, image2,
                 image3, image4, image5, image6, sexo, descripcion, fechaNacimiento, posicion);
-        settingsServiceClient.createSettingsData(uidString, 18, 30, 50, sexo);
+       // settingsServiceClient.createSettingsData(uidString, 18, 30, 50, sexo);
 
         String encodedPassword = passwordEncoder.encode(password);
         Autenticacion userAuthData = new Autenticacion();

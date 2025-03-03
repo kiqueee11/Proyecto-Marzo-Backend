@@ -36,7 +36,7 @@ public class ChatController {
     }
 
     @PostMapping("/reveal-identity")
-    public ChatResponse<ChatModel> revealChatIdentity(@RequestBody Long chatId) {
+    public ChatResponse<ChatModel> revealChatIdentity(@RequestParam String chatId) {
 
         chatService.revealChatIdentityUseCase.execute(chatId);
         return ChatResponse.success("Exito", null, HttpStatus.OK);
@@ -44,7 +44,7 @@ public class ChatController {
     }
 
     @PostMapping("/delete-chat")
-    public ChatResponse<ChatModel> deleteChat(@RequestBody Long chatId) {
+    public ChatResponse<ChatModel> deleteChat(@RequestParam String chatId) {
 
         chatService.deleteChatUseCase.execute(chatId);
         return ChatResponse.success("Exito", null, HttpStatus.OK);

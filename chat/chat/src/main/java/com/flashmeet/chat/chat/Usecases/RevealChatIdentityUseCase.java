@@ -13,9 +13,9 @@ public class RevealChatIdentityUseCase {
 
     private ChatRepository chatRepository;
 
-    public void execute(Long chatId) {
+    public void execute(String chatId) {
 
-        ChatModel chat = chatRepository.findById(chatId).orElse(null);
+        ChatModel chat = chatRepository.findByChatId(chatId).orElse(null);
         if (chat == null) {
 
             throw new ChatException(ErrCodes.THE_CHAT_REQUESTED_DOES_NOT_EXIST, "El chat solicitado no existe",

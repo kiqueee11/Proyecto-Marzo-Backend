@@ -41,7 +41,7 @@ public class MessagesController {
                 "SUCCCESS", null,
                 HttpStatus.OK);
 
-        messagesService.getSendMessageUseCase().execute(entity);
+        messagesService.getSendMessageUseCase().execute(entity, userId);
 
         return ResponseEntity.ok(messageServiceResponse);
     }

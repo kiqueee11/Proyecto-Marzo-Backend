@@ -31,11 +31,17 @@ public class DecodificarToken {
     public List<GrantedAuthority> getAuthoritiesFromToken(String token) {
         Claims claimns = Jwts.parser().verifyWith(Keys.hmacShaKeyFor(Base64.decode(CLAVE_SECRETA))).build()
                 .parseSignedClaims(token).getPayload();
-                String rol = claimns.get("rol", String.class);
-                SimpleGrantedAuthority authorities = new SimpleGrantedAuthority(rol);
+        String rol = claimns.get("rol", String.class);
+        SimpleGrantedAuthority authorities = new SimpleGrantedAuthority(rol);
 
-       return List.of(authorities);
+        return List.of(authorities);
 
+    }
+
+    public String getUserIdFromToken(String token) {
+        JwtParserBuilder parser = Jwts.parser().verifyWith(Keys.hmacShaKeyFor(Base64.decode(CLAVE_SECRETA)));
+        Claims claims = parser.build().parseSignedClaims(token).getPayload();
+        return (String) claims.get("userId");
     }
 
 }

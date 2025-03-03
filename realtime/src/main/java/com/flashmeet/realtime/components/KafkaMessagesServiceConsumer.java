@@ -12,7 +12,6 @@ public class KafkaMessagesServiceConsumer {
  
     @KafkaListener(topics = "messages", groupId = "realtime")
     public void consume(String message) {
-
         realtimeWebSocketHandler.sendToClients(message);
     }
 

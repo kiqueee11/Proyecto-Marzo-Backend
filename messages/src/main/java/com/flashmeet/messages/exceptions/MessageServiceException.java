@@ -2,8 +2,9 @@ package com.flashmeet.messages.exceptions;
 
 import org.springframework.http.HttpStatus;
 
-import lombok.Data;
+import lombok.Getter;
 
+@Getter
 public class MessageServiceException extends RuntimeException {
 
     String errorCode;

@@ -3,6 +3,7 @@ package com.example.auth_service.componentes.JWT;
 import java.security.Signature;
 import java.time.Instant;
 import java.util.Date;
+import java.util.UUID;
 import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.stream.Collector;
@@ -35,7 +36,24 @@ public class CreadorTokenJWT {
     CustomUserDetails userDetails = (CustomUserDetails) autentication.getPrincipal();
 
     return Jwts.builder().claim("rol", rol).subject(userDetails.getUsername()).claim("userId", userDetails.getUserId())
-        .issuedAt(new Date())
+        .claim("isRefreshToken", false)
+        .issuedAt(new Date()).id(UUID.randomUUID().toString()) 
+        .expiration(Date.from(Instant.now().plusSeconds(3600))).signWith(Keys.hmacShaKeyFor(claveDecodificada))
+        .compact();
+
+  }
+
+  public String generarRefreshToken(Authentication autentication, String userRol) {
+
+    Decoder decoder = Base64.getDecoder();
+
+    byte[] claveDecodificada = decoder.decode(CLAVE_SECRETA);
+    String rol = userRol;
+    CustomUserDetails userDetails = (CustomUserDetails) autentication.getPrincipal();
+
+    return Jwts.builder().claim("rol", rol).subject(userDetails.getUsername()).claim("userId", userDetails.getUserId())
+        .claim("isRefreshToken", true)
+        .issuedAt(new Date()).id(UUID.randomUUID().toString()) 
         .expiration(Date.from(Instant.now().plusSeconds(86400))).signWith(Keys.hmacShaKeyFor(claveDecodificada))
         .compact();
 

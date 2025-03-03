@@ -27,7 +27,6 @@ public class ChatModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(nullable = false)
     private String user1_id;
     @Column(nullable = false)
@@ -41,13 +40,23 @@ public class ChatModel {
     private String user1_picture;
 
     private String user2_picture;
+    @Column(nullable = false)
 
     private boolean user1_online;
+    @Column(nullable = false)
 
     private boolean user2_online;
 
-    private boolean isChatAnnonimous=true;
+    private boolean isChatAnnonimous = true;
+    @Column(nullable = false)
 
+    private boolean user1wantsToRevealIdentity;
+    @Column(nullable = false)
+
+    private boolean user2wantstoRevealIdentity;
+
+    @Column(nullable = false)
+    private String chatId;
 
     @Version
     private Long version;

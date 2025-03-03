@@ -1,12 +1,14 @@
 package com.flashmeet.gateway.gateway.WebFilters;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.boot.autoconfigure.mustache.MustacheProperties.Reactive;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
+import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.lang.NonNull;
 import com.flashmeet.gateway.gateway.componentes.JWT.DecodificarToken;
 import com.flashmeet.gateway.gateway.componentes.JWT.ValidadorJWT;
@@ -70,21 +73,22 @@ public class JWTFilter implements WebFilter {
     }
 
     public Authentication getAuthentication(String token) {
-        String nobreUsuario = decodificarToken.getUsernameFromToken(token);
+        String idUsuario = decodificarToken.getUserIdFromToken(token);
         List<GrantedAuthority> authorities = decodificarToken.getAuthoritiesFromToken(token);
-        return new UsernamePasswordAuthenticationToken(nobreUsuario, null, authorities);
+        return new UsernamePasswordAuthenticationToken(idUsuario, null, authorities);
     }
 
     @Override
     public @NonNull Mono<Void> filter(@NonNull ServerWebExchange exchange, @NonNull WebFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
 
-        if ("/auth/auth/iniciarSesion".equals(path) || "/auth/auth/register".equals(path)) {
+        if ("/auth/auth/iniciarSesion".equals(path) || "/auth/auth/signup".equals(path)) {
             return chain.filter(exchange);
         }
 
         return Mono.justOrEmpty(getToken(exchange.getRequest().getHeaders().getFirst("Authorization")))
-                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.UNAUTHORIZED))) // Si no hay token, error 401
+                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.UNAUTHORIZED))) // Si no hay token,
+                                                                                                 // error 401
                 .flatMap(token -> {
                     if (!validadorJWT.validarToken(token)) {
                         return Mono.error(new ResponseStatusException(HttpStatus.UNAUTHORIZED));
@@ -92,8 +96,17 @@ public class JWTFilter implements WebFilter {
                     return Mono.just(getAuthentication(token));
                 })
                 .flatMap(authentication -> {
+                    URI uri = UriComponentsBuilder.fromUri(exchange.getRequest().getURI())
+                            .replaceQueryParam("userId", authentication.getName()).build().toUri();
+
+                    ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
+                            .uri(uri)
+                            .build();
+
+                    ServerWebExchange mutatedExchange = exchange.mutate().request(mutatedRequest).build();
+
                     SecurityContextImpl context = new SecurityContextImpl(authentication);
-                    return chain.filter(exchange)
+                    return chain.filter(mutatedExchange)
                             .contextWrite(ReactiveSecurityContextHolder.withSecurityContext(Mono.just(context)));
                 });
     }

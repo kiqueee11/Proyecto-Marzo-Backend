@@ -22,6 +22,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flashmeet.messages.DTOs.MessageDTO;
+import com.flashmeet.messages.exceptions.MessageServiceException;
 import com.flashmeet.messages.response.MessageServiceResponse;
 import com.flashmeet.messages.serializadores.SerializadorListToMap;
 import com.github.andrewoma.dexx.collection.HashMap;
@@ -47,31 +48,17 @@ public class ExceptionManager {
 
     }
 
+    @ExceptionHandler(MessageServiceException.class)
+    public ResponseEntity<MessageServiceResponse<MessageDTO>> handleMessagesServiceExceptions(
+            MessageServiceException messageServiceException) {
 
+        MessageServiceResponse<MessageDTO> messageServiceResponse = MessageServiceResponse.failure(
+                messageServiceException.getMessage(), null,
+                messageServiceException.getHttpStatus(), messageServiceException.getErrorCode());
 
+        return ResponseEntity.badRequest().body(messageServiceResponse);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
+    }
 
     private String errrosToJson(MethodArgumentNotValidException methodArgumentNotValidException) {
         List<FieldError> errors = methodArgumentNotValidException.getFieldErrors();

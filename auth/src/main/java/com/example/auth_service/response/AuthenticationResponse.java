@@ -1,8 +1,14 @@
 package com.example.auth_service.response;
 
+import org.springframework.http.HttpStatus;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+
+@AllArgsConstructor
+
 public class AuthenticationResponse<T> {
 
     private boolean success;
@@ -12,23 +18,20 @@ public class AuthenticationResponse<T> {
     private int statusCode;
     private String statusDescripcion;
 
+    public static <T> AuthenticationResponse<T> success(boolean success, String message, T data,
+            HttpStatus httpStatus) {
 
+        return new AuthenticationResponse<T>(success, message, data, message, httpStatus.value(),
+                httpStatus.getReasonPhrase());
 
-    // Constructor para respuestas exitosas
-    public AuthenticationResponse(boolean success, String message, T data, int statusCode, String statusDescripcion) {
-        this.success = success;
-        this.message = message;
-        this.data = data;
     }
 
-    // Constructor para respuestas con error
-    public AuthenticationResponse(boolean success, String message, T data, String errorCode, int statusCode, String statusDescripcion) {
-        this.success = success;
-        this.message = message;
-        this.data = data;
-        this.errorCode = errorCode;
-    }
+    public static <T> AuthenticationResponse<T> failure(boolean success, String message, T data, String errorCode,
+            HttpStatus httpStatus) {
 
+        return new AuthenticationResponse<T>(success, message, data, errorCode, httpStatus.value(),
+                httpStatus.getReasonPhrase());
+    }
 
     @Override
     public String toString() {
@@ -42,4 +45,4 @@ public class AuthenticationResponse<T> {
                 '}';
     }
 
-    }
+}

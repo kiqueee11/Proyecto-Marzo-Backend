@@ -17,6 +17,7 @@ Flash Meet es una aplicación para conocer gente de forma novedosa, basada en el
 
 ## Endpoints Implementados
 Excepto las de el microservicio de autenticacion, todas las rutas necesitan el Authorization Bearer Token
+En UI for apache kafka (UI de kafka incluida en el docker compose, debemos crear un topic llamado messagess, y en los settings de ese topic debemos modificar "max.message.bytes" a 100000 )
 
 ### Autenticación
 

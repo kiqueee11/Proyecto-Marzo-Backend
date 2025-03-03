@@ -16,6 +16,7 @@ Flash Meet es una aplicación para conocer gente de forma novedosa, basada en el
 - **Videollamadas**
 
 ## Endpoints Implementados
+Excepto las de el microservicio de autenticacion, todas las rutas necesitan el Authorization Bearer Token
 
 ### Autenticación
 

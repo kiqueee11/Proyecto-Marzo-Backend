@@ -146,3 +146,8 @@ Excepto las de el microservicio de autenticacion, todas las rutas necesitan el A
 **Servicios en desarrollo:**
 - **Cerrar sesión (Autenticación)**
 -   **Videollamadas** y **Settings**.
+
+
+
+NOTA: todos los microservicios estan detras del Gateway (implementado con Spring Gateway) y este es el encargado de autorizar el paso a las demas rutas, dejando libres al inicio de sesion y a la creacion de usuarios.
+Todas las rutas con "internal" son llamadas desde los microservicios entre si, por eso usan datos simples o incluso primitivos de java, en el resto estamos implementando DTO para una mejor respuesta al fron-end

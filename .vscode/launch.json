@@ -2,6 +2,19 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MediaServerApplication",
+            "request": "launch",
+            "mainClass": "com.flash_meet.media_server.MediaServerApplication",
+            "projectName": "media_server"
+        },
+        {
+            "type": "java",
+            "name": "ChatApplication",
+            "request": "launch",
+            "mainClass": "com.flashmeet.chat.chat.ChatApplication"
+        },
+        {
+            "type": "java",
             "name": "GatewayApplication",
             "request": "launch",
             "mainClass": "com.flashmeet.gateway.gateway.GatewayApplication"
@@ -52,6 +65,61 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "com.flashmeet.gateway.gateway.GatewayApplication",
             "projectName": "gateway",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=35329 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=gateway"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ChatApplication<chat>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.flashmeet.chat.chat.ChatApplication",
+            "projectName": "chat",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-MessagesApplication<messages>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.flashmeet.messages.MessagesApplication",
+            "projectName": "messages",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-RealtimeApplication<realtime>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.flashmeet.realtime.RealtimeApplication",
+            "projectName": "realtime",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-SettingsApplication<settings>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.flashmeet.settings.SettingsApplication",
+            "projectName": "settings",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-VideocallApplication<videocall>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.flashmeet.videocall.VideocallApplication",
+            "projectName": "videocall",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }

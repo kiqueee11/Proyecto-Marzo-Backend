@@ -1,4 +1,4 @@
-package com.example.auth_service.interfaces;
+package com.example.auth_service.feignInterfaces;
 
 import java.time.Instant;
 import java.util.Map;

@@ -61,5 +61,28 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
       KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
 
+  redisdb:
+    image: redis:latest
+    ports:
+      - 6379:6379
+
+  redis-ui:
+    image: redis/redisinsight:latest
+    ports: 
+      - 5540:5540
+    depends_on:
+      - redisdb
+  minio-storage:
+    image: minio/minio:latest
+    ports:
+      - 9000:9000
+      - 9001:9001
+    restart: always
+    env_file:
+      - ./minio/env/.env
+    volumes:
+      - ./minio/data:/data
+    command: server --console-address ":9001" /data
+
 volumes:
   db_data:

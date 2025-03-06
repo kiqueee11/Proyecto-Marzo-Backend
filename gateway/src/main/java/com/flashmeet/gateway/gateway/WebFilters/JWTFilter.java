@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.mustache.MustacheProperties.Reactive;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.lang.NonNull;
 import com.flashmeet.gateway.gateway.componentes.JWT.DecodificarToken;
 import com.flashmeet.gateway.gateway.componentes.JWT.ValidadorJWT;
+import com.flashmeet.gateway.gateway.services.TokevVerificationService;
+
 import reactor.core.publisher.Mono;
 
 public class JWTFilter implements WebFilter {
@@ -30,6 +33,8 @@ public class JWTFilter implements WebFilter {
     private final ValidadorJWT validadorJWT;
 
     private final DecodificarToken decodificarToken;
+    @Autowired
+    private TokevVerificationService tokenService;
 
     public JWTFilter(ValidadorJWT validadorJWT, DecodificarToken decodificarToken) {
         this.validadorJWT = validadorJWT;
@@ -87,11 +92,15 @@ public class JWTFilter implements WebFilter {
         }
 
         return Mono.justOrEmpty(getToken(exchange.getRequest().getHeaders().getFirst("Authorization")))
-                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.UNAUTHORIZED))) // Si no hay token,
-                                                                                                 // error 401
+                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.UNAUTHORIZED)))
                 .flatMap(token -> {
                     if (!validadorJWT.validarToken(token)) {
                         return Mono.error(new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+                    }
+
+                    if (!tokenService.tokenIsValid(token)) {
+                        return Mono.error(new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+
                     }
                     return Mono.just(getAuthentication(token));
                 })

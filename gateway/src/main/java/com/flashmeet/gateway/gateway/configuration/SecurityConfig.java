@@ -21,6 +21,7 @@ import org.springframework.security.web.server.authentication.SessionLimit;
 import com.flashmeet.gateway.gateway.WebFilters.JWTFilter;
 import com.flashmeet.gateway.gateway.componentes.JWT.DecodificarToken;
 import com.flashmeet.gateway.gateway.componentes.JWT.ValidadorJWT;
+import com.flashmeet.gateway.gateway.services.TokevVerificationService;
 
 @Configuration
 @EnableMethodSecurity

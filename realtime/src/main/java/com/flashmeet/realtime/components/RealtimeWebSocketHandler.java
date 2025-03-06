@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -34,6 +35,23 @@ public class RealtimeWebSocketHandler extends TextWebSocketHandler {
         System.out.println("Nueva conexión WebSocket establecida: " + session.getAttributes());
     }
 
+    public void removeUserSession(String userUID) {
+
+        for (WebSocketSession webSocketSession : sessions) {
+            if (webSocketSession.getAttributes().get("userId").equals(userUID)) {
+                try {
+                    webSocketSession.close(CloseStatus.NORMAL);
+                    System.out.println("Sesión del usuario " + userUID + " cerrada.");
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                sessions.remove(webSocketSession);
+
+            }
+        }
+    }
+
     public void sendToClients(String message) {
         for (WebSocketSession session : sessions) {
             try {
@@ -59,7 +77,7 @@ public class RealtimeWebSocketHandler extends TextWebSocketHandler {
             return Optional.empty();
         }
 
-        return Optional.of(uri.getQuery().substring(uri.getQuery().indexOf("=")));
+        return Optional.of(uri.getQuery().substring(uri.getQuery().indexOf("=")+1));
     }
 
 }

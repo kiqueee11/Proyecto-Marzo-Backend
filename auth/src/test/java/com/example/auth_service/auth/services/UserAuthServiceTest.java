@@ -25,7 +25,7 @@ import com.example.auth_service.Utils.UIDGenerator;
 import com.example.auth_service.componentes.JWT.CreadorTokenJWT;
 import com.example.auth_service.componentes.JWT.ValidadorJWT;
 import com.example.auth_service.exceptions.UserAuthException;
-import com.example.auth_service.interfaces.UserServiceClient;
+import com.example.auth_service.feignInterfaces.UserServiceClient;
 import com.example.auth_service.model.Autenticacion;
 import com.example.auth_service.repository.UserAuthRepository;
 import com.example.auth_service.services.UserAuthServices;

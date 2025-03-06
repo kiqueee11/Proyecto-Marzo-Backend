@@ -2,6 +2,7 @@ package com.flashmeet.settings.Controllers;
 
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.flashmeet.settings.Service.SettingsService;
 import com.flashmeet.settings.model.SettingsModel;
+import com.flashmeet.settings.rersponse.SettingsResponse;
 
 @RestController
 @RequestMapping("/settings")
@@ -22,28 +24,40 @@ public class SettingsController {
         this.settingsService = settingsService;
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<SettingsModel> saveSettings(@RequestBody SettingsModel settingsModel) {
+    @PostMapping("/save-settings")
+    public ResponseEntity<?> saveSettings(@RequestParam String userId,
+            @RequestParam int maxAge,
+            @RequestParam int minAge, @RequestParam int distance, @RequestParam String sexualPreference) {
 
-        settingsService.saveSettings(settingsModel);
-        return ResponseEntity.ok(settingsModel);
+        settingsService.getSaveSettingsUseCase().execute(userId, minAge, maxAge, distance,
+                sexualPreference);
+
+        SettingsResponse<?> settingsResponse = SettingsResponse.success("SUCCESS", null, HttpStatus.OK);
+        return ResponseEntity.status(settingsResponse.getStatusCode()).body(settingsResponse);
+
     }
 
-    @PostMapping("/internal/createSettingsData")
-    public String createSettingsData(@RequestParam String id_usuario,
-            @RequestParam int edad_maxima,
-            @RequestParam int edad_minima, @RequestParam int distancia, @RequestParam String preferencia_sexual) {
+    @PostMapping("/internal/saveSettingsFromservice")
+    public String saveSettingsFromservice(@RequestParam String userId,
+            @RequestParam int maxAge,
+            @RequestParam int minAge, @RequestParam int distance, @RequestParam String sexualPreference) {
 
-        SettingsModel settingsModel = new SettingsModel();
+        settingsService.getSaveSettingsUseCase().execute(userId, minAge, maxAge, distance,
+                sexualPreference);
 
-        settingsModel.setId_usuario(id_usuario);
-        settingsModel.setEdad_minima(edad_minima);
-        settingsModel.setEdad_maxima(edad_maxima);
-        settingsModel.setDistancia(distancia);
-        settingsModel.setPreferencia_sexual(preferencia_sexual);
-        settingsService.saveSettings(settingsModel);
+        SettingsResponse<?> settingsResponse = SettingsResponse.success("SUCCESS", null, HttpStatus.OK);
+        return "OK";
 
-        return "done";
+    }
+
+    @PostMapping("/get-settings")
+    public ResponseEntity<SettingsResponse<SettingsModel>> getSettings(@RequestParam("userId") String userId) {
+
+        SettingsModel settings = settingsService.getGetSettingsUseCase().execute(userId);
+
+        SettingsResponse<SettingsModel> settingsResponse = SettingsResponse.success("SUCCESS", settings, HttpStatus.OK);
+        return ResponseEntity.status(settingsResponse.getStatusCode()).body(settingsResponse);
+
     }
 
 }

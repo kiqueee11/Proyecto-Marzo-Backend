@@ -102,7 +102,7 @@ public class UserController {
 
             return ResponseEntity.status(response.getStatusCode()).body(response);
         } else {
-            response = UserServiceResponse.success("SUCCESS", null, HttpStatus.NOT_FOUND);
+            response = UserServiceResponse.success("SUCCESS", null, HttpStatus.OK);
             return ResponseEntity.status(response.getStatusCode()).body(response);
         }
 

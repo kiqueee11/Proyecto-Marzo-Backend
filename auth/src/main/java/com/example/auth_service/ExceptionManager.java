@@ -57,6 +57,16 @@ public class ExceptionManager {
 
     }
 
+    @ExceptionHandler(Exception.class)
+    ResponseEntity<AuthenticationResponse<String>> handleExceptions(Exception e) {
+
+        AuthenticationResponse<String> authenticationResponse = AuthenticationResponse.failure(false, e.getMessage(),
+                null, "INTERNAL_SERVER_ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
+
+        return ResponseEntity.status(authenticationResponse.getStatusCode()).body(authenticationResponse);
+
+    }
+
     private String errrosToJson(MethodArgumentNotValidException methodArgumentNotValidException) {
         List<FieldError> errors = methodArgumentNotValidException.getFieldErrors();
         StringBuilder stringBuilder = new StringBuilder();

@@ -16,24 +16,24 @@ public class SettingsModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String id_usuario;
+    private String userId;
 
 
     @Column(nullable = false)
-    private int edad_maxima;
+    private int maxAge;
 
     @Column(nullable = false)
-    private int edad_minima;
-
-    @Column(nullable = false)
-
-    private int distancia;
+    private int minAge;
 
     @Column(nullable = false)
 
-    private String preferencia_sexual;
+    private int distance;
 
     @Column(nullable = false)
 
-    private boolean visible = true;
+    private String sexualPreference;
+
+    @Column(nullable = false)
+
+    private boolean isVisible = true;
 }

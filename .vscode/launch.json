@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MediaServerApplication",
+            "request": "launch",
+            "mainClass": "com.flash_meet.media_server.MediaServerApplication",
+            "projectName": "media_server"
+        },
+        {
+            "type": "java",
             "name": "ChatApplication",
             "request": "launch",
             "mainClass": "com.flashmeet.chat.chat.ChatApplication"

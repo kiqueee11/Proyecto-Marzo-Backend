@@ -9,11 +9,15 @@ public class KafkaMessagesServiceConsumer {
     @Autowired
     private RealtimeWebSocketHandler realtimeWebSocketHandler;
 
- 
     @KafkaListener(topics = "messages", groupId = "realtime")
-    public void consume(String message) {
-
+    public void consumeMessages(String message) {
         realtimeWebSocketHandler.sendToClients(message);
+    }
+
+    @KafkaListener(topics = "token-expiration-notification", groupId = "realtime")
+    public void consumeExpiredUserAuthToken(String message) {
+        realtimeWebSocketHandler.removeUserSession(message);
+
     }
 
 }

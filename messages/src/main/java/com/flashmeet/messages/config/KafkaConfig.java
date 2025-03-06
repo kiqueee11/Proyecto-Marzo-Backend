@@ -21,8 +21,7 @@ public class KafkaConfig {
 
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate(ProducerFactory<String, String> producerFactory) {
-        return new KafkaTemplate<>(producerFactory); // Usamos el ProducerFactory para crear el KafkaTemplate
-    }
+        return new KafkaTemplate<>(producerFactory); }
 
     @Bean
     public NewTopic messagesTopic() {
@@ -32,11 +31,11 @@ public class KafkaConfig {
     @Bean
     public ProducerFactory<String, String> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:29092"); // Dirección del broker
-        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class); // Serializa las claves
-        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class); // Serializa los valores
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:29092"); 
+        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         System.out.println("📌 Kafka Producer conectándose a: " + bootstrapServers);
-        return new DefaultKafkaProducerFactory<>(configProps); // Crea un nuevo ProducerFactory
+        return new DefaultKafkaProducerFactory<>(configProps); 
     }
 
 

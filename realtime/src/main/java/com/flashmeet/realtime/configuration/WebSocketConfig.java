@@ -21,7 +21,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(@SuppressWarnings("null") WebSocketHandlerRegistry registry) {
-        registry.addHandler(webSocketHandler(), "/wss").setAllowedOrigins("*");
+        
+        registry.addHandler(webSocketHandler(), "/realtime").setAllowedOrigins("*");
     }
 
     

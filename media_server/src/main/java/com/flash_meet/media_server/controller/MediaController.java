@@ -42,4 +42,19 @@ public class MediaController {
         }
     }
 
+    @PostMapping(value = "/get-media")
+    public byte[] getMedia(@RequestParam String fileName) {
+        try {
+            byte[] response = mediaService.getFile(fileName);
+
+            if (response == null) {
+                return null;
+            }
+
+            return response;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to upload file: " + e.getMessage());
+        }
+    }
+
 }

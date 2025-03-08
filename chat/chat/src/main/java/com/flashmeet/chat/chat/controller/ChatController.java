@@ -1,5 +1,7 @@
 package com.flashmeet.chat.chat.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,6 +50,15 @@ public class ChatController {
 
         chatService.deleteChatUseCase.execute(chatId);
         return ChatResponse.success("Exito", null, HttpStatus.OK);
+
+    }
+
+
+    @PostMapping("/get-all-chats")
+    public ChatResponse<List<ChatModel>> getUserChats(@RequestParam("userId") String userId) {
+
+     List<ChatModel> chats =   chatService.getAllChatsUseCase.execute(userId);
+        return ChatResponse.success("Exito", chats, HttpStatus.OK);
 
     }
 

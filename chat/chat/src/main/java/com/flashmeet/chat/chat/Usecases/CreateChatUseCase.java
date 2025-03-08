@@ -51,14 +51,14 @@ public class CreateChatUseCase {
 
 
         ChatModel chat = new ChatModel();
-        chat.setUser1_id(userId1);
-        chat.setUser2_id(userId2);
-        chat.setUser1_name((String) user1.get("nombre"));
-        chat.setUser2_name((String) user2.get("nombre"));
-        chat.setUser1_picture(((List<String>) user1.get("imagenes")).getFirst());
-        chat.setUser2_picture(((List<String>)  user2.get("imagenes")).getFirst());
-        chat.setUser1_online(true);
-        chat.setUser2_online(true);
+        chat.setUser1Id(userId1);
+        chat.setUser2Id(userId2);
+        chat.setUser1Name((String) user1.get("nombre"));
+        chat.setUser2Name((String) user2.get("nombre"));
+        chat.setUser1Picture(((List<String>) user1.get("imagenes")).getFirst());
+        chat.setUser2Picture(((List<String>)  user2.get("imagenes")).getFirst());
+        chat.setUser1Online(true);
+        chat.setUser2Online(true);
         chat.setChatAnnonimous(true);
         chat.setChatId(UIDGenerator.generateId(20));
 

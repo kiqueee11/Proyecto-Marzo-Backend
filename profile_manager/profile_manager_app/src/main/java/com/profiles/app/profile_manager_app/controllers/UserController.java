@@ -151,7 +151,7 @@ public class UserController {
 
 
     @PostMapping("/get-user-data")
-    public ResponseEntity<UserServiceResponse<DatosUsuario>> getUserDataModelById(@RequestParam("userId") String userId) {
+    public ResponseEntity<UserServiceResponse<DatosUsuario>> getUserData(@RequestParam("userId") String userId) {
         UserServiceResponse<DatosUsuario> response;
 
         DatosUsuario users = this.userService.getUserModelUseCase.execute(userId);

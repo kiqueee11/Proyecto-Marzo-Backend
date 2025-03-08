@@ -149,4 +149,23 @@ public class UserController {
 
     }
 
+
+    @PostMapping("/get-user-data")
+    public ResponseEntity<UserServiceResponse<DatosUsuario>> getUserDataModelById(@RequestParam("userId") String userId) {
+        UserServiceResponse<DatosUsuario> response;
+
+        DatosUsuario users = this.userService.getUserModelUseCase.execute(userId);
+
+        if (users == null) {
+            response = UserServiceResponse.failure("ERROR", null, HttpStatus.NOT_FOUND,
+                    ErrCodes.COULD_NOT_FIND_USERS_NEAR_YOU);
+
+            return ResponseEntity.status(response.getStatusCode()).body(response);
+        } else {
+            response = UserServiceResponse.success("SUCCESS", users, HttpStatus.OK);
+            return ResponseEntity.status(response.getStatusCode()).body(response);
+        }
+
+    }
+
 }

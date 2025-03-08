@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flashmeet.chat.chat.Usecases.CreateChatUseCase;
 import com.flashmeet.chat.chat.Usecases.DeleteChatUseCase;
+import com.flashmeet.chat.chat.Usecases.GetAllChatsUseCase;
 import com.flashmeet.chat.chat.Usecases.RevealChatIdentityUseCase;
 import com.flashmeet.chat.chat.feignClientInterfaces.UserServiceClient;
 
@@ -33,13 +34,18 @@ public class ChatService {
 
     public final RevealChatIdentityUseCase revealChatIdentityUseCase;
 
+    public final GetAllChatsUseCase getAllChatsUseCase;
+
+
     public ChatService(ChatRepository chatRepository,
             DeleteChatUseCase deleteChatUseCase, RevealChatIdentityUseCase revealChatIdentityUseCase,
-            CreateChatUseCase createChatUseCase) {
+            CreateChatUseCase createChatUseCase, GetAllChatsUseCase getAllChatsUseCase) {
         this.chatRepository = chatRepository;
         this.deleteChatUseCase = deleteChatUseCase;
         this.revealChatIdentityUseCase = revealChatIdentityUseCase;
         this.createChatUseCase = createChatUseCase;
+        this.getAllChatsUseCase = getAllChatsUseCase;
+
     }
 
 }

@@ -16,6 +16,7 @@ import com.profiles.app.profile_manager_app.Exceptions.UserException;
 import com.profiles.app.profile_manager_app.models.DatosUsuario;
 import com.profiles.app.profile_manager_app.repository.UserRepository;
 import com.profiles.app.profile_manager_app.usecases.CreateUserUseCase;
+import com.profiles.app.profile_manager_app.usecases.GeUserModelUseCase;
 import com.profiles.app.profile_manager_app.usecases.GetUserByEmailUseCase;
 import com.profiles.app.profile_manager_app.usecases.GetUserByIdUseCase;
 import com.profiles.app.profile_manager_app.usecases.GetUserByPositionUsecase;
@@ -29,6 +30,8 @@ public class UserService {
     public GetUserByEmailUseCase getUserByEmailUseCase;
     public GetUserByPositionUsecase getUserByPositionUsecase;
     public GetUserByIdUseCase getUserByIdUseCase;
+    public GeUserModelUseCase getUserModelUseCase;
+
 
     public UserService(UserRepository userRepository, CreateUserUseCase createUserUseCase,
             GetUserByEmailUseCase getUserByEmailUseCase, GetUserByPositionUsecase getUserByPositionUsecase,

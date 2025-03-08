@@ -28,24 +28,24 @@ public class ChatModel {
     private Long id;
 
     @Column(nullable = false)
-    private String user1_id;
+    private String user1Id;
     @Column(nullable = false)
 
-    private String user2_id;
+    private String user2Id;
 
-    private String user1_name;
+    private String user1Name;
 
-    private String user2_name;
+    private String user2Name;
 
-    private String user1_picture;
+    private String user1Picture;
 
-    private String user2_picture;
+    private String user2Picture;
     @Column(nullable = false)
 
-    private boolean user1_online;
+    private boolean user1Online;
     @Column(nullable = false)
 
-    private boolean user2_online;
+    private boolean user2Online;
 
     private boolean isChatAnnonimous = true;
     @Column(nullable = false)

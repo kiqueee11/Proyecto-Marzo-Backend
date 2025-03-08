@@ -35,12 +35,14 @@ public class UserService {
 
     public UserService(UserRepository userRepository, CreateUserUseCase createUserUseCase,
             GetUserByEmailUseCase getUserByEmailUseCase, GetUserByPositionUsecase getUserByPositionUsecase,
-            GetUserByIdUseCase getUserByIdUseCase) {
+            GetUserByIdUseCase getUserByIdUseCase, GeUserModelUseCase getUserModelUseCase) {
         this.userRepository = userRepository;
         this.createUserUseCase = createUserUseCase;
         this.getUserByEmailUseCase = getUserByEmailUseCase;
         this.getUserByPositionUsecase = getUserByPositionUsecase;
         this.getUserByIdUseCase = getUserByIdUseCase;
+        this.getUserModelUseCase = getUserModelUseCase;
+
     }
 
 }

@@ -35,7 +35,7 @@ public class ChatController {
         chatService.createChatUseCase.execute(user1_id, user2_id);
         return ChatResponse.success("Exito", null, HttpStatus.OK);
 
-    }
+    }    
 
     @PostMapping("/reveal-identity")
     public ChatResponse<ChatModel> revealChatIdentity(@RequestParam String chatId) {

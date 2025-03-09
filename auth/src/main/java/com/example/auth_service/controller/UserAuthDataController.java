@@ -47,6 +47,8 @@ public class UserAuthDataController {
         userAuthServices.signUpUseCase.execute(nombre, clave, email, image1, image2, image3,
                 image4, image5, image6, sexo, descripcion, fechaNacimiento, posicion);
 
+            
+
         AuthenticationResponse<AuthDTO> authenticationResponse = AuthenticationResponse.success(true, "SUCCESS", null,
                 HttpStatus.CREATED);
 

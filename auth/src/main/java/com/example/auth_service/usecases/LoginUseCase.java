@@ -66,6 +66,12 @@ public class LoginUseCase {
         if (authToken != null) {
             authToken.setRevoked(true);
             tokenDataManager.save(authToken);
+            authToken = new AuthTokens();
+            authToken.setUserUID(loginDto.userId());
+            authToken.setToken(loginDto.token());
+            authToken.setTokenUID(loginDto.tokenUID());
+            authToken.setTokenExpirationDate(loginDto.tokenExpiration());
+            authToken.setRevoked(false);
         } else {
             authToken = new AuthTokens();
             authToken.setUserUID(loginDto.userId());

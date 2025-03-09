@@ -130,16 +130,15 @@ public class UserController {
         }
     }
 
-    @PostMapping("/buscarusuarioporposicion")
-    public ResponseEntity<UserServiceResponse<List<DatosUsuarioDTO>>> buscarUsuarioPorPosicion(
-            @RequestParam String posicion, @RequestParam int distancia) {
-        UserServiceResponse<List<DatosUsuarioDTO>> response;
+    @PostMapping("/get-user-data")
+    public ResponseEntity<UserServiceResponse<DatosUsuario>> getUserData(@RequestParam("userId") String userId) {
+        UserServiceResponse<DatosUsuario> response;
 
-        List<DatosUsuarioDTO> users = this.userService.getUserByPositionUsecase.execute(posicion, distancia);
+        DatosUsuario users = this.userService.getUserModelUseCase.execute(userId);
 
         if (users == null) {
             response = UserServiceResponse.failure("ERROR", null, HttpStatus.NOT_FOUND,
-                    ErrCodes.COULD_NOT_FIND_USERS_NEAR_YOU);
+                    "THE_USER_WAS_NOT_FOUND");
 
             return ResponseEntity.status(response.getStatusCode()).body(response);
         } else {
@@ -147,14 +146,14 @@ public class UserController {
             return ResponseEntity.status(response.getStatusCode()).body(response);
         }
 
-    }
+    } 
 
+    @PostMapping("/buscarusuarioporposicion")
+    public ResponseEntity<UserServiceResponse<List<DatosUsuarioDTO>>> buscarUsuarioPorPosicion(
+            @RequestParam String posicion, @RequestParam int distancia) {
+        UserServiceResponse<List<DatosUsuarioDTO>> response;
 
-    @PostMapping("/get-user-data")
-    public ResponseEntity<UserServiceResponse<DatosUsuario>> getUserData(@RequestParam("userId") String userId) {
-        UserServiceResponse<DatosUsuario> response;
-
-        DatosUsuario users = this.userService.getUserModelUseCase.execute(userId);
+        List<DatosUsuarioDTO> users = this.userService.getUserByPositionUsecase.execute(posicion, distancia);
 
         if (users == null) {
             response = UserServiceResponse.failure("ERROR", null, HttpStatus.NOT_FOUND,

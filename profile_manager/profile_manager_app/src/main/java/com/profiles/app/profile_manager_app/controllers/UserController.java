@@ -158,7 +158,7 @@ public class UserController {
 
         if (users == null) {
             response = UserServiceResponse.failure("ERROR", null, HttpStatus.NOT_FOUND,
-                    ErrCodes.COULD_NOT_FIND_USERS_NEAR_YOU);
+                    "THE_USER_WAS_NOT_FOUND");
 
             return ResponseEntity.status(response.getStatusCode()).body(response);
         } else {

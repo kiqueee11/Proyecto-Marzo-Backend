@@ -33,7 +33,7 @@ public class SendMessageUseCase {
                     "Este mensaje no pertence a ningun chat", HttpStatus.NOT_FOUND);
         }
 
-        if (!chatData.get("user1_id").equals(senderUserId) && !chatData.get("user2_id").equals(senderUserId)) {
+        if (!chatData.get("user1id").equals(senderUserId) && !chatData.get("user2id").equals(senderUserId)) {
 
             throw new MessageServiceException(ErrCodes.YOU_ARE_NOT_ALLOWED_TO_WRITE_TO_THIS_CHAT,
                     "No tienes permiso para escribir en este chat, no eres ninguno de los participantes",

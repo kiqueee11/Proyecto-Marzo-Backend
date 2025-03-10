@@ -17,7 +17,7 @@ public class ChatRepository {
     JdbcTemplate jdbcTemplate;
 
     public Optional<Map<String, Object>> getChatData(String chatId) {
-        String sqlQuery = "SELECT user1_id,user2_id FROM chat WHERE chat_id = ? ";
+        String sqlQuery = "SELECT user1id,user2id FROM chat WHERE chat_id = ? ";
         List<Map<String, Object>> chatData = jdbcTemplate.queryForList(sqlQuery, chatId);
 
         if (chatData.size() > 0) {

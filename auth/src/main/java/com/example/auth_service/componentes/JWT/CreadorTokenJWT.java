@@ -27,8 +27,8 @@ public class CreadorTokenJWT {
 
   @Value("${jwt.secret}")
   private String CLAVE_SECRETA;
-  private int MAX_TOKEN_DURATION = 600;
-  private int MAX_REFRESH_TOKEN_DURATION = 600;
+  private int MAX_TOKEN_DURATION = 86400;
+  private int MAX_REFRESH_TOKEN_DURATION = 86400;
 
   public Map<String, String> generateToken(Authentication autentication, String userRol) {
 
